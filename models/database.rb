@@ -23,4 +23,33 @@ class Database
   def klass(symbol)
     symbol.to_s.capitalize.constantize
   end
+
+  def clear
+    db.clear
+    db.push
+  end
+
+end
+
+module UseDatabase
+  module ClassMethods
+    def all
+      DB.all(name)
+    end
+
+    def find(search_string)
+
+    end
+  end
+  
+  module InstanceMethods
+    def save
+      DB.store(self.class.name, self)
+    end
+  end
+  
+  def self.included(receiver)
+    receiver.extend         ClassMethods
+    receiver.send :include, InstanceMethods
+  end
 end
