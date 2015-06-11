@@ -12,9 +12,3 @@ db.store(:cars, car)
 puts db.load(:cars)
 
 
-
-#### Do not delete
-db.merge
-db.push
-#################
-
