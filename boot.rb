@@ -1,7 +1,12 @@
+puts "Booting..."
+
 require "active_support"
 require "active_support/core_ext"
 require "pry"
 require "awesome_print"
 require "json_store"
+require "require_all"
 
-puts "Booting up"
+require_all "models"
+
+puts "Done"
