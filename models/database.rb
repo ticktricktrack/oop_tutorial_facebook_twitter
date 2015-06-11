@@ -1,18 +1,26 @@
 class Database
-  attr_accessor :db
+  attr_reader :db
   def initialize
-    @db = JsonStore.new("database.json")
+    @db = JsonStore.new("db.json")
     @db.pull
   end
 
-  def load(name)
-    db.pull
-    db.get(name)
+  def all(model)
+    db.get(model) || []
   end
 
-  def store(name, object)
-    db.set(name, object)
+  def find(model, attribute, query )
+    all(model).detect{ |o| o[attribute] == query }
+  end
+
+  def store(model, object)
+    with_new = all(model).push(object).uniq
+    db.set(model, with_new)
     db.merge
     db.push
+  end
+
+  def klass(symbol)
+    symbol.to_s.capitalize.constantize
   end
 end
